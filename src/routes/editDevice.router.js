@@ -1,53 +1,58 @@
-router.post('/edit/:id', async (req, res) => {
+const express = require('express');
+
+const router = express.Router();
+const { User, Device, DeviceInfo } = require('../../db/models');
+const renderTemplate = require('../utils/renderTemplate.js');
+const EditPage = require('../views/editPage.jsx');
+
+// Маршрут для отображения страницы редактирования товара по его id
+router.get('/edit/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const edit = await Device.findByPk(id);
+    const result = edit.get({ plain: true });
+    console.log(result);
+    renderTemplate(EditPage, { result }, res);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.put('/', async (req, res) => {
   const { name, price, rating, img, brand, type, title, description } =
     req.body;
-  const { userId } = req.session;
-  const { id } = req.params; // Получаем идентификатор товара для редактирования
-
   try {
-    const user = await User.findByPk(userId);
-    if (!user.isAdmin()) {
-      return res.status(403).send('Доступ запрещен');
-    }
+    const deviceId = req.params.id;
 
-    if (name.length === 0 || description.length === 0) {
-      return res.sendStatus(404);
-    }
+    // Обновляем запись в таблице Device
+    await Device.update(
+      {
+        name,
+        price,
+        rating,
+        img,
+        brand,
+        type,
+      },
+      { where: { id: deviceId } }
+    );
 
-    // Находим товар по его идентификатору
-    const device = await Device.findByPk(id);
-    if (!device) {
-      return res.status(404).send('Товар не найден');
-    }
-
-    // Обновляем данные товара
-    await device.update({
-      name,
-      price,
-      rating,
-      img,
-      brand,
-      type,
-    });
-
-    // Обновляем информацию о товаре
-    const deviceInfo = await DeviceInfo.findOne({ where: { deviceId: id } });
+    // Теперь обновляем запись в таблице DeviceInfo
+    const deviceInfo = await DeviceInfo.findOne({ where: { deviceId } });
     if (deviceInfo) {
-      await deviceInfo.update({
-        title,
-        description,
-      });
+      deviceInfo.title = title;
+      deviceInfo.description = description;
+      await deviceInfo.save();
     } else {
-      await DeviceInfo.create({
-        title,
-        description,
-        deviceId: id,
-      });
+      // Если запись DeviceInfo не найдена, создаем новую запись
+      await DeviceInfo.create({ title, description, deviceId });
     }
 
-    res.json(device);
+    res.json({ success: true });
   } catch (error) {
-    console.error('Ошибка при обновлении товара:', error);
+    console.log(error);
     res.status(500).send('Ошибка сервера');
   }
 });
+
+module.exports = router;

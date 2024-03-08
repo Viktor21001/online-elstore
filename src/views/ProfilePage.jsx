@@ -36,10 +36,7 @@ function ProfilePage({ user, login, isAdmin, devices }) {
                   Удалить
                 </button>
                 {isAdmin && (
-                  <a
-                    href={`/products/${device.id}/edit`}
-                    className="btn btn-primary edit"
-                  >
+                  <a href={`/edit/${device.id}`} className="edit-button">
                     Изменить
                   </a>
                 )}
