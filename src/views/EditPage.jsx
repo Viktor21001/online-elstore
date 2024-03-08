@@ -2,12 +2,11 @@
 const React = require('react');
 const Layout = require('./Layout');
 
-function EditPage({ login, isAdmin, device }) {
+function EditPage({ login, isAdmin, device, deviceInfo }) {
   return (
     <Layout login={login} isAdmin={isAdmin}>
       <div className="card-entity card-edit">
-        <form id="edit-form" action={`/edit/${device.id}/edit`} method="PUT">
-          <input type="hidden" name="id" value={device?.id} />
+        <form id={device?.id} name="editForm">
           <label htmlFor="name-input" className="info-label">
             Название товара
           </label>
@@ -79,7 +78,7 @@ function EditPage({ login, isAdmin, device }) {
             type="text"
             className="input-area"
             id="type-input"
-            defaultValue={device?.type}
+            defaultValue={deviceInfo?.title}
             placeholder="Тип"
           />
 
@@ -91,7 +90,7 @@ function EditPage({ login, isAdmin, device }) {
             type="text"
             className="input-area"
             id="description-title"
-            defaultValue={device?.title}
+            defaultValue={deviceInfo?.description}
             placeholder="Заголовок"
             required
           />
@@ -105,6 +104,7 @@ function EditPage({ login, isAdmin, device }) {
             id="description-input"
             className="input-area input-textarea"
             placeholder="Описание товара"
+            type="text"
             defaultValue={device?.description}
             required
           ></textarea>

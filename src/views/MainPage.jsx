@@ -6,7 +6,12 @@ function MainPage({ devices, login, isAdmin }) {
     <Layout login={login} isAdmin={isAdmin}>
       <div className="products-container">
         {devices?.map((device) => (
-          <div className="card device-card" key={device.id} id={device.id}>
+          <div
+            className="card device-card"
+            key={device.id}
+            id={device.id}
+            style={{ maxWidth: '300px', maxHeight: '200px' }}
+          >
             <img src={device?.img} alt={device?.name} />
             <div className="card-body">
               <h5 className="card-title">{device?.name}</h5>

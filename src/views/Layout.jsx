@@ -8,6 +8,7 @@ function Layout({ children, login, isAdmin }) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Интернет-магазин</title>
         <link rel="icon" href="/assets/favicon.ico" type="image/x-icon" />
+        <link rel="stylesheet" href="/css/style.css" />
         <link
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"

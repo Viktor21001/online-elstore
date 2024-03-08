@@ -1,6 +1,6 @@
 const React = require('react');
 const Layout = require('./Layout');
-const MainPage = require('./MainPage'); // Импортируем компонент MainPage
+const MainPage = require('./MainPage');
 
 function ProfilePage({ user, login, isAdmin, devices }) {
   return (
@@ -19,7 +19,11 @@ function ProfilePage({ user, login, isAdmin, devices }) {
             </a>
           </button>
           {devices.map((device) => (
-            <div className="card deldevice-card" key={device.id}>
+            <div
+              className="card deldevice-card"
+              key={device.id}
+              style={{ maxWidth: '300px', maxHeight: '200px' }}
+            >
               <img src={device.img} alt={device.name} />
               <div className="card-body">
                 <h5 className="card-title">{device.name}</h5>
@@ -36,7 +40,10 @@ function ProfilePage({ user, login, isAdmin, devices }) {
                   Удалить
                 </button>
                 {isAdmin && (
-                  <a href={`/edit/${device.id}`} className="edit-button">
+                  <a
+                    href={`/editDevice/edit/${device.id}`}
+                    className="edit-button"
+                  >
                     Изменить
                   </a>
                 )}
@@ -46,7 +53,6 @@ function ProfilePage({ user, login, isAdmin, devices }) {
         </div>
       )}
       <script defer src="/js/delete.js" />
-      {/* <script defer src="/js/index.js" /> */}
     </Layout>
   );
 }

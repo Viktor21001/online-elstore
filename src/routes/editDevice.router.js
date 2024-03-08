@@ -1,7 +1,7 @@
 const express = require('express');
 
 const router = express.Router();
-const { User, Device, DeviceInfo } = require('../../db/models');
+const { Device, DeviceInfo, User } = require('../../db/models');
 const renderTemplate = require('../utils/renderTemplate.js');
 const EditPage = require('../views/editPage.jsx');
 
@@ -9,44 +9,38 @@ const EditPage = require('../views/editPage.jsx');
 router.get('/edit/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    const edit = await Device.findByPk(id);
-    const result = edit.get({ plain: true });
-    console.log(result);
-    renderTemplate(EditPage, { result }, res);
+    const { login } = req.session;
+    const device = await Device.findByPk(id);
+    const result = device.get({ plain: true });
+    renderTemplate(EditPage, { device: result, login }, res);
   } catch (error) {
     console.log(error);
+    res.status(500).send('Ошибка сервера');
   }
 });
 
-router.put('/', async (req, res) => {
+// Маршрут для обновления информации о товаре
+router.put('/edit/:id', async (req, res) => {
+  const { id } = req.params;
   const { name, price, rating, img, brand, type, title, description } =
     req.body;
+  console.log(req.body);
   try {
-    const deviceId = req.params.id;
+    const device = await Device.findOne({ where: { id } });
 
-    // Обновляем запись в таблице Device
-    await Device.update(
-      {
-        name,
-        price,
-        rating,
-        img,
-        brand,
-        type,
-      },
-      { where: { id: deviceId } }
-    );
+    device.name = name;
+    device.price = price;
+    device.rating = rating;
+    device.img = img;
+    device.brand = brand;
+    device.type = type;
+    await device.save();
 
-    // Теперь обновляем запись в таблице DeviceInfo
-    const deviceInfo = await DeviceInfo.findOne({ where: { deviceId } });
-    if (deviceInfo) {
-      deviceInfo.title = title;
-      deviceInfo.description = description;
-      await deviceInfo.save();
-    } else {
-      // Если запись DeviceInfo не найдена, создаем новую запись
-      await DeviceInfo.create({ title, description, deviceId });
-    }
+    const deviceInfo = await DeviceInfo.findOne({ where: { deviceId: id } });
+
+    deviceInfo.title = title;
+    deviceInfo.description = description;
+    await deviceInfo.save();
 
     res.json({ success: true });
   } catch (error) {

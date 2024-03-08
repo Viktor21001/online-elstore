@@ -16,7 +16,7 @@ function ItemFormNew({ login, isAdmin }) {
             placeholder="Название товара"
             required
           />
-
+          <hr />
           <label htmlFor="price-input" className="info-label">
             Цена
           </label>
@@ -28,7 +28,7 @@ function ItemFormNew({ login, isAdmin }) {
             placeholder="Цена"
             required
           />
-
+          <hr />
           <label htmlFor="rating-input" className="rate-label">
             Рейтинг товара
           </label>
@@ -40,7 +40,7 @@ function ItemFormNew({ login, isAdmin }) {
             placeholder="Рейтинг товара"
             required
           />
-
+          <hr />
           <label htmlFor="photo-input" className="info-label">
             Фото (ссылка)
           </label>
@@ -51,7 +51,7 @@ function ItemFormNew({ login, isAdmin }) {
             id="photo-input"
             placeholder="Фото (ссылка)"
           />
-
+          <hr />
           <label htmlFor="brand-input" className="info-label">
             Бренд
           </label>
@@ -62,7 +62,7 @@ function ItemFormNew({ login, isAdmin }) {
             id="brand-input"
             placeholder="Бренд"
           />
-
+          <hr />
           <label htmlFor="type-input" className="info-label">
             Тип
           </label>
@@ -73,7 +73,7 @@ function ItemFormNew({ login, isAdmin }) {
             id="type-input"
             placeholder="Тип"
           />
-
+          <hr />
           <label htmlFor="description-title" className="info-label">
             Заголовок
           </label>
@@ -85,7 +85,7 @@ function ItemFormNew({ login, isAdmin }) {
             placeholder="Заголовок"
             required
           />
-
+          <hr />
           <label htmlFor="description-input" className="info-label">
             Описание товара
           </label>
@@ -97,7 +97,7 @@ function ItemFormNew({ login, isAdmin }) {
             placeholder="Описание товара"
             required
           ></textarea>
-
+          <hr />
           <button
             type="submit"
             id="add-btn"

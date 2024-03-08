@@ -1,0 +1,33 @@
+.card-entity {
+  margin: 0 auto; /* Центрирование формы по горизонтали */
+  width: 50%; /* Ширина формы */
+  padding: 20px; /* Отступы вокруг формы */
+  border: 1px solid #ccc; /* Граница формы */
+  border-radius: 8px; /* Скругление углов формы */
+}
+
+.input-area {
+  width: 100%;
+  margin-bottom: 10px; /* Отступ между полями ввода */
+}
+
+.label {
+  display: block; /* Делаем метки блочными для правильного позиционирования */
+  margin-bottom: 5px; /* Отступ между метками и полями ввода */
+}
+
+.button {
+  display: block;
+  width: 100%;
+  padding: 10px 15px;
+  background-color: #ffcc00; /* Цвет кнопки */
+  color: #fff; /* Цвет текста кнопки */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Плавное изменение цвета при наведении */
+}
+
+.button:hover {
+  background-color: #ffa500; /* Изменение цвета кнопки при наведении */
+}
